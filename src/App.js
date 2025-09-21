@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./styles.css";
 
 // see the question on one side and when u click u see the answer on the other side
@@ -11,13 +12,19 @@ import "./styles.css";
 
 export default function App() {
   return (
+    <div>
+      <FlashCards />
+    </div>
+  );
+}
+
+function FlashCards() {
+  const [open, isOpen] = useState(true);
+  return (
     <div className="flashcards">
-      <FlashCards />
-      <FlashCards />
-      <FlashCards />
-      <FlashCards />
-      <FlashCards />
-      <FlashCards />
+      {questions.map((f) => (
+        <div key={f.id}>{open === true ? f.question : f.answer}</div>
+      ))}
     </div>
   );
 }
@@ -55,7 +62,3 @@ const questions = [
     answer: "Controlled element",
   },
 ];
-
-function FlashCards() {
-  return <div>TODO</div>;
-}
