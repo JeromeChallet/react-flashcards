@@ -1,34 +1,6 @@
 import { useState } from "react";
 import "./styles.css";
 
-// see the question on one side and when u click u see the answer on the other side
-// when click the card turn into red, div.selected
-// clicking a second time will turn the card back to the question without the red
-// clicking on another card will close the first one if opened, only one open card at a time
-// use one piece of state
-
-// 1 create the cards with their questions
-// 2 create function to flip the card and display the answer
-
-export default function App() {
-  return (
-    <div>
-      <FlashCards />
-    </div>
-  );
-}
-
-function FlashCards() {
-  const [open, isOpen] = useState(true);
-  return (
-    <div className="flashcards">
-      {questions.map((f) => (
-        <div key={f.id}>{open === true ? f.question : f.answer}</div>
-      ))}
-    </div>
-  );
-}
-
 const questions = [
   {
     id: 3457,
@@ -62,3 +34,32 @@ const questions = [
     answer: "Controlled element",
   },
 ];
+export default function App() {
+  return (
+    <div>
+      <FlashCards />
+    </div>
+  );
+}
+
+function FlashCards() {
+  const [selectedId, setSelectedId] = useState(null);
+
+  function handleClick(id) {
+    setSelectedId(id !== selectedId ? id : null);
+  }
+
+  return (
+    <div className="flashcards">
+      {questions.map((question) => (
+        <div
+          key={question.id}
+          onClick={() => handleClick(question.id)}
+          className={question.id === selectedId ? "selected" : ""}
+        >
+          {question.id === selectedId ? question.answer : question.question}
+        </div>
+      ))}
+    </div>
+  );
+}
